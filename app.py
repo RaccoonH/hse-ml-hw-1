@@ -88,7 +88,7 @@ df_input = load_empty_data(feature_names)
 
 st.title("Car price predict")
 
-tab_input, tab_csv, tab_plots = st.tabs(["Input", "CSV", "Plots"])
+tab_input, tab_csv, tab_plots, tab_model_weights = st.tabs(["Input", "CSV", "Plots", "Model weights"])
 
 with tab_input:
     col1, col2 = st.columns(2)
@@ -156,3 +156,10 @@ with tab_plots:
     st.pyplot(plot_bar(df_train))
     st.write("Boxplot for numeric column")
     st.pyplot(plot_boxplot(df_train))
+
+with tab_model_weights:
+    weights = dict()
+    weights['intercept'] = model.intercept_
+    for col, i in zip(feature_names, model.coef_):
+        weights[col] = i
+    st.dataframe(weights)
